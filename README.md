@@ -4,12 +4,6 @@ Exercises and code examples for learning HTML, CSS, and basic JavaScript through
 
 ---
 
-## Project Structure
-
-<pre><code>```text coding-for-ux/ ├── classwork/ ← Weekly coding exercises │ ├── 01-html-intro/ │ ├── 02-x/ │ └── ... ├── final-project/ ← Iterative project starting mid-course │ ├── index.html │ ├── style.css │ └── script.js ├── .gitignore └── README.md ```</code></pre>
-
----
-
 ## 📚 Contents
 
 ### 🔧 Classwork
