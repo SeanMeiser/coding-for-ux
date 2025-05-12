@@ -17,8 +17,8 @@
 
     <!-- HUD -->
     <div class="hud">
-      <span class="hud-time">🕒 7:29 AM</span>
-      <span class="hud-phase">It’s morning</span>
+      <span id="timeNow" class="hud-time">🕒 --:--</span>
+      <span id="timePhase" class="hud-phase">Loading...</span>
       <span class="hud-settings">⚙️</span>
     </div>
 
@@ -43,8 +43,8 @@
 
     <!-- HUD -->
     <div class="hud">
-      <span class="hud-time">🕒 7:30 AM</span>
-      <span class="hud-phase">It’s morning</span>
+      <span id="timeNow" class="hud-time">🕒 --:--</span>
+      <span id="timePhase" class="hud-phase">Loading...</span>
       <span class="hud-settings">⚙️</span>
     </div>
 
@@ -71,7 +71,45 @@
     </div>
   </div>
 
+  <!-- Script -->
   <script>
+    function updateTimeAndPhase() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+
+      const isAM = hours < 12;
+      const displayHours = (hours % 12 || 12).toString();
+      const ampm = isAM ? 'AM' : 'PM';
+      const timeStr = `🕒 ${displayHours}:${minutes} ${ampm}`;
+
+      // Update all time elements
+      document.querySelectorAll('#timeNow').forEach(el => {
+        el.textContent = timeStr;
+      });
+
+      // Set phase
+      let phase = '';
+      if (hours >= 5 && hours < 12) {
+        phase = "It’s morning";
+      } else if (hours >= 12 && hours < 17) {
+        phase = "It’s midday";
+      } else if (hours >= 17 && hours < 21) {
+        phase = "It’s evening";
+      } else {
+        phase = "It’s night";
+      }
+
+      document.querySelectorAll('#timePhase').forEach(el => {
+        el.textContent = phase;
+      });
+    }
+
+    // Run on load and every 30 seconds
+    updateTimeAndPhase();
+    setInterval(updateTimeAndPhase, 30000);
+
+    // Transition screen on START
     document.getElementById('startButton').addEventListener('click', () => {
       document.getElementById('startScreen').style.display = 'none';
       document.getElementById('morningScreen').style.display = 'flex';
