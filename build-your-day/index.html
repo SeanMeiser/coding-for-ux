@@ -1,32 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
-    <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
-    <title>Routine Planner</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+  <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
+  <title>Routine Planner</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<body>
+
+  <body>
     <header>
-        <h1>Routine Planner</h1>
+      <h1>Routine Planner</h1>
     </header>
 
     <main>
-        <div class="container">
-            <button id="start-btn">Start Quiz</button>
-            <button id="submit-btn">Submit</button>
-          
-            <script type="module" src="script.js"></script>
-        </div>
+      <!-- Home -->
+      <section id="home-screen" class="screen active">
+        <h1>Welcome!</h1>
+        <p>Ready to start your day with intention?</p>
+        <button id="start-button">Start</button>
+      </section>
+
+      <!-- Questions -->
+      <section id="question-screen" class="screen hidden">
+        <h2 id="question-title"></h2>
+        <div id="answer-options"></div>
+        <button id="submit-button">Submit</button>
+      </section>
+
+      <!-- Results -->
+      <section id="results-screen" class="screen hidden">
+        <h2>Morning Routine Complete!</h2>
+        <p id="results-text"></p>
+      </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 Sean Meiser & Brian Glennon</p>
+      <p>&copy; 2024 Sean Meiser & Brian Glennon</p>
     </footer>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
