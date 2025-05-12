@@ -1,0 +1,103 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  background: black;
+  height: 100%;
+  font-family: 'Press Start 2P', cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.screen {
+  position: relative;
+  width: 100vmin;
+  height: 100vmin;
+  max-width: 768px;
+  max-height: 768px;
+  overflow: hidden;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.background {
+  background: url('images/bg-loop.png') no-repeat center center;
+  background-size: cover;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hud {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.5rem;
+  color: #ccc;
+  z-index: 2;
+}
+
+.content, .question-box {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  text-align: center;
+
+  .pixel-title {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    color: white;
+    text-shadow: 2px 2px #000;
+  }
+
+  .nes-btn {
+    font-size: 0.8rem;
+  }
+}
+
+.question-box {
+  width: 80%;
+  font-size: 0.7rem;
+  padding: 1rem;
+
+  .button-row {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+}
+
+.nav-controls {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.5rem;
+  color: #ccc;
+  z-index: 3;
+}
+
+.foreground {
+  position: absolute;
+  bottom: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  z-index: 2;
+
+  img {
+    height: 64px;
+    image-rendering: pixelated;
+  }
+}

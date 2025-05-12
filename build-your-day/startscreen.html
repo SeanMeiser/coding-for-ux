@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pathfinder</title>
+  <link href="https://unpkg.com/nes.css/css/nes.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+
+  <!-- Start Screen -->
+  <div id="startScreen" class="screen">
+    <!-- Background Image -->
+    <div class="background"></div>
+
+    <!-- HUD -->
+    <div class="hud">
+      <span class="hud-time">🕒 7:29 AM</span>
+      <span class="hud-phase">It’s morning</span>
+      <span class="hud-settings">⚙️</span>
+    </div>
+
+    <!-- Center Content -->
+    <div class="content">
+      <h1 class="pixel-title">Let’s Build Your Day</h1>
+      <button id="startButton" class="nes-btn is-success">START</button>
+    </div>
+
+    <!-- Foreground Sprites -->
+    <div class="foreground">
+      <img src="images/character.png" alt="character" />
+      <img src="images/sign.png" alt="signpost" />
+      <img src="images/cat.png" alt="cat" />
+    </div>
+  </div>
+
+  <!-- Morning Question Screen -->
+  <div id="morningScreen" class="screen" style="display:none;">
+    <!-- Background Image -->
+    <div class="background"></div>
+
+    <!-- HUD -->
+    <div class="hud">
+      <span class="hud-time">🕒 7:30 AM</span>
+      <span class="hud-phase">It’s morning</span>
+      <span class="hud-settings">⚙️</span>
+    </div>
+
+    <!-- Question Box -->
+    <div class="question-box nes-container is-rounded is-dark">
+      <p>Do you want to start your day active?</p>
+      <div class="button-row">
+        <button class="nes-btn is-success">Yes</button>
+        <button class="nes-btn is-error">No</button>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-controls">
+      <span class="nes-text">← Go back</span>
+      <span class="nes-text">Skip →</span>
+    </div>
+
+    <!-- Foreground Sprites -->
+    <div class="foreground">
+      <img src="images/character.png" alt="character" />
+      <img src="images/sign.png" alt="signpost" />
+      <img src="images/cat.png" alt="cat" />
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('startButton').addEventListener('click', () => {
+      document.getElementById('startScreen').style.display = 'none';
+      document.getElementById('morningScreen').style.display = 'flex';
+    });
+  </script>
+
+</body>
+</html>
