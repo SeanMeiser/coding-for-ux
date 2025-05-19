@@ -1,38 +1,4 @@
-import { createMachine, interpret } from 'https://cdn.skypack.dev/xstate';
-
-//defines states
-const quizMachine = createMachine({
-  id: 'quiz',
-  initial: 'intro',
-  states: {
-    intro: { on: { START: 'morning' } },
-    morning: { on: { SUBMIT: 'afternoon' } },
-    afternoon: { on: { SUBMIT: 'evening' } },
-    evening: { on: { SUBMIT: 'results' } },
-    results: { type: 'final' }
-  }
-});
-
-//define userFlags object here next
-
-
-//logs state changes in console
-const service = interpret(quizMachine).onTransition(state => {
-  console.log('Now in state:', state.value);
-});
-
-service.start();
-
-//event listeners for start and submit
-document.getElementById('start-button').addEventListener('click', () => {
-  service.send('START');
-});
-
-document.getElementById('submit-button').addEventListener('click', () => {
-  service.send('SUBMIT');
-});
-
-//starter question info (check if all morning)
+// starter question info
 const questionData = [
     {
       id: 'q1',
@@ -78,3 +44,93 @@ const questionData = [
     }
   ];
   
+// store answer + update flags 
+let currentQuestion = null;
+let userFlags = {};
+let userAnswers = [];
+
+// switches visible screen
+function goTo(screenId) {
+  // Log which screen we're trying to show
+  console.log('Going to screen:', screenId);
+
+  // finds all element with class 'screen' and removes 'active' from them
+  document.querySelectorAll('.screen').forEach(s => {
+    console.log('Removing active from:', s.id);
+    s.classList.remove('active');
+  });
+
+  // Find the specific screen we want to show by its ID
+  const targetScreen = document.getElementById(screenId);
+  
+  console.log('Adding active to:', screenId);
+  
+  // adding the active class to make this visible!!!!!
+  targetScreen.classList.add('active');
+}
+
+function renderQuestion(question) {
+  console.log('Rendering question:', question);
+  
+  // stores the current question in our variable
+  currentQuestion = question;
+
+  const title = document.getElementById('question-title');
+  const answers = document.getElementById('answer-options');
+
+  //Set the question text in the title element
+  title.textContent = question.question;
+  
+  //supposed to clear previous selected options
+  answers.innerHTML = '';
+
+  //for each option in the question
+  question.options.forEach(option => {
+    // create button element
+    const btn = document.createElement('button');
+    btn.className = 'nes-btn';
+    // Set the button text to the option text
+    btn.textContent = option.text;
+    btn.onclick = () => select(option);
+    // add the selection to the answers container
+    answers.appendChild(btn);
+  });
+
+  goTo('question-screen');
+}
+
+function select(option) {
+  //saves answer
+  userAnswers.push({ id: currentQuestion.id, text: option.text });
+
+  //merge flags
+  if (option.set) {
+    Object.assign(userFlags, option.set);
+  }
+
+  //go next question
+  if (option.next === 'result') {
+    goTo('results-screen');
+    displayResults();
+  } else {
+    const nextQuestion = questionData.find(q => q.id === option.next);
+    renderQuestion(nextQuestion);
+  }
+}
+
+function displayResults() {
+  const resultsText = document.getElementById('results-text');
+  // Customize this however you want:
+  resultsText.textContent = `You chose to ${userFlags.moved ? 'move' : 'rest'}, and felt ${userFlags.mentallyPrepared ? 'mentally prepared' : 'neutral'}.`;
+}
+
+// Add event listeners when the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('start-button').addEventListener('click', () => {
+    console.log('Start button clicked');
+    const firstQuestion = questionData[0];
+    console.log('First question:', firstQuestion);
+    renderQuestion(firstQuestion);
+    console.log('Question rendered');
+  });
+});

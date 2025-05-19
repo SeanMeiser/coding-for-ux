@@ -1,2 +1,4 @@
 .screen { display: none; }
 .screen.active { display: block; }
+.hidden { display: none; }
+
