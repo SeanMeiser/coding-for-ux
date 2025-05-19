@@ -6,7 +6,7 @@
   <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
   <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
   <title>Routine Planner</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="style.css" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -24,14 +24,14 @@
       </section>
 
       <!-- Questions -->
-      <section id="question-screen" class="screen hidden">
+      <section id="question-screen" class="screen">
         <h2 id="question-title"></h2>
         <div id="answer-options"></div>
         <button id="submit-button">Submit</button>
       </section>
 
       <!-- Results -->
-      <section id="results-screen" class="screen hidden">
+      <section id="results-screen" class="screen">
         <h2>Morning Routine Complete!</h2>
         <p id="results-text"></p>
       </section>
@@ -41,6 +41,6 @@
       <p>&copy; 2024 Sean Meiser & Brian Glennon</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
   </body>
 </html>
