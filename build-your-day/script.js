@@ -1,3 +1,36 @@
+// Changes background everytime a question is answered
+function setVideoForScreen(screenId) {
+  const video = document.getElementById('background-video');
+  const videoMap = {
+    'home-screen': 'bg-home.mp4',
+    'question-screen': {
+      q1: 'bg-q1.mp4',
+      q2: 'bg-q2.mp4',
+      q3: 'bg-q3.mp4',
+      q4: 'bg-q4.mp4',
+      q6: 'bg-q6.mp4',
+    },
+    'results-screen': 'bg-results.mp4'
+  };
+
+  let src = '';
+
+  if (screenId === 'question-screen' && currentQuestion) {
+    src = `video/${videoMap[screenId][currentQuestion.id]}`;
+  } else {
+    src = `video/${videoMap[screenId]}`;
+  }
+
+  video.classList.add('fade-out');
+
+  setTimeout(() => {
+    video.src = src;
+    video.load();
+    video.play();
+    video.classList.remove('fade-out');
+  }, 500);
+}
+
 // starter question info
 const questionData = [
     {
@@ -74,6 +107,7 @@ function renderQuestion(question) {
   
   // stores the current question in our variable
   currentQuestion = question;
+  setVideoForScreen('question-screen');
 
   const title = document.getElementById('question-title');
   const answers = document.getElementById('answer-options');
@@ -112,6 +146,7 @@ function select(option) {
   if (option.next === 'result') {
     goTo('results-screen');
     displayResults();
+    setVideoForScreen('results-screen');
   } else {
     const nextQuestion = questionData.find(q => q.id === option.next);
     renderQuestion(nextQuestion);
@@ -131,6 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const firstQuestion = questionData[0];
     console.log('First question:', firstQuestion);
     renderQuestion(firstQuestion);
+    setVideoForScreen('question-screen');
     console.log('Question rendered');
   });
 });

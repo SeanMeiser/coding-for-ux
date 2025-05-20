@@ -1,9 +1,8 @@
-body, html {
+html, body {
   margin: 0;
   padding: 0;
-  background: black;
   height: 100%;
-  font-family: 'Press Start 2P', cursive;
+  background: black;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,12 +22,14 @@ body, html {
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
-.background {
-  background: url('images/bg-loop.png') no-repeat center center;
-  background-size: cover;
-  position: absolute;
-  inset: 0;
-  z-index: 0;
+.square-container {
+  position: relative;
+  width: 100vmin;
+  height: 100vmin;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: transparent; /* no white background */
 }
 
 .hud {
@@ -100,4 +101,13 @@ body, html {
     height: 64px;
     image-rendering: pixelated;
   }
+}
+
+#background-video {
+  transition: opacity 1s ease;
+  opacity: 1;
+}
+
+#background-video.fade-out {
+  opacity: 0;
 }
