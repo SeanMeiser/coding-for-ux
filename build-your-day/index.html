@@ -1,79 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
-  <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
-  <title>Routine Planner</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day Companion</title>
+
+  <!-- NES.css for pixel UI -->
+  <link href="https://unpkg.com/nes.css/css/nes.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: transparent;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    main {
-      flex: 1;
-      overflow-y: auto;
-      padding: 1rem;
-    }
-
-    header, footer {
-      text-align: center;
-      padding: 0.5rem;
-    }
-
-    .screen {
-      display: none;
-    }
-
-    .screen.active {
-      display: block;
-    }
-  </style>
 </head>
-
 <body>
-  <div class="square-container">
-    <video id="background-video" autoplay muted loop playsinline style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-1;"></video>
-    <header>
-      <h1>Routine Planner</h1>
-    </header>
 
-    <main>
-      <!-- Home -->
-      <section id="home-screen" class="screen active">
-        <h1>Welcome!</h1>
-        <p>Ready to start your day with intention?</p>
-        <button id="start-button">Start</button>
-      </section>
+  <!-- HEADER -->
+  <header id="site-header">
+    <p id="time-display">0:00 Time Unavailble due to Demo</p>
+    <h1>Day Companion</h1>
+  </header>
 
-      <!-- Questions -->
-      <section id="question-screen" class="screen">
-        <h2 id="question-title"></h2>
-        <div id="answer-options"></div>
-      </section>
-
-      <!-- Results -->
-      <section id="results-screen" class="screen">
-        <h2>Morning Routine Complete!</h2>
-        <p id="results-text"></p>
-      </section>
-    </main>
-
-    <footer>
-      <p>&copy; 2024 Sean Meiser & Brian Glennon</p>
-    </footer>
+  <!-- START SCREEN -->
+  <div class="screen" id="start-screen">
+    <div class="video-wrapper">
+      <video id="start-video" autoplay muted loop playsinline></video>
+    </div>
+    <div class="square-ui nes-container with-title is-centered">
+      <p class="title">Welcome!</p>
+      <button class="nes-btn is-primary" onclick="nextStep()">Start Your Day</button>
+    </div>
   </div>
 
-  <script type="module" src="script.js"></script>
+  <!-- Q1: MOVEMENT QUESTION -->
+  <div class="screen" id="question-screen">
+    <div class="video-wrapper">
+      <video id="question-video" autoplay muted loop playsinline></video>
+    </div>
+    <div class="square-ui nes-container with-title is-centered">
+      <p class="title">Start your day with movement.</p>
+      <button class="nes-btn is-primary" onclick="selectActivity('Yoga', 10)">Yoga</button>
+      <span class="duration">10 min</span>
+      <button class="nes-btn is-primary" onclick="selectActivity('Run', 30)">Run</button>
+      <span class="duration">30 min</span>
+      <button class="nes-btn is-primary" onclick="selectActivity('Workout', 60)">Workout</button>
+      <span class="duration">60 min</span>
+      <div class="nav-buttons">
+        <button class="nes-btn is-error" onclick="goBack()">⬅ Back</button>
+        <button class="nes-btn is-success" onclick="skipStep()">Skip ➡</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTIVITY SCREEN (Q1) -->
+  <div class="screen" id="activity-screen">
+    <div class="video-wrapper">
+      <video id="activity-video" autoplay muted loop playsinline></video>
+    </div>
+    <div class="square-ui activity-ui nes-container with-title is-centered">
+      <h2 id="activity-title">Activity</h2>
+      <p id="timer-display">00:00</p>
+      <button class="nes-btn is-success" onclick="finishActivity()">Finish Activity</button>
+    </div>
+  </div>
+
+  <!-- REFLECTION SCREEN (Q1) -->
+  <div class="screen" id="reflection-screen">
+    <div class="video-wrapper">
+      <video id="reflection-video" autoplay muted loop playsinline></video>
+    </div>
+    <div class="square-ui nes-container with-title is-centered">
+      <p class="title">How do you feel now?</p>
+      <input id="reflectionInput" class="nes-input" type="text" placeholder="Type your feeling..." />
+      <div class="nav-buttons">
+        <button class="nes-btn is-error" onclick="goBack()">⬅ Back</button>
+        <button class="nes-btn is-success" onclick="submitReflection()">Next ➡</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2: MIND ACTIVITY QUESTION -->
+  <div class="screen" id="question2-screen">
+    <div class="video-wrapper">
+      <video id="question2-video" autoplay muted loop playsinline></video>
+    </div>
+    <div class="square-ui nes-container with-title is-centered">
+      <p class="title">Set the day up right:</p>
+      <button class="nes-btn" onclick="selectMindActivity('todo')">Write a to-do list</button>
+      <button class="nes-btn" onclick="selectMindActivity('intention')">Set one intention</button>
+      <button class="nes-btn" onclick="selectMindActivity('braindump')">3-min brain dump</button>
+      <div class="nav-buttons">
+        <button class="nes-btn is-error" onclick="goBack()">⬅ Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTIVITY SCREEN (Q2) -->
+  <div class="screen" id="activity2-screen">
+    <div class="video-wrapper">
+      <video id="activity2-video" autoplay muted loop playsinline></video>
+    </div>
+    <div class="square-ui nes-container with-title is-centered">
+      <p class="title" id="activity2-title">Activity</p>
+      <input id="mindActivityInput" class="nes-input" type="text" placeholder="Type here…" />
+      <div class="nav-buttons">
+        <button class="nes-btn is-error" onclick="goBack()">⬅ Back</button>
+        <button class="nes-btn is-success" onclick="submitMindActivity()">Next ➡</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFLECTION SCREEN (Q2) -->
+  <div class="screen" id="reflection2-screen">
+    <div class="video-wrapper">
+      <video id="reflection2-video" autoplay muted loop playsinline></video>
+    </div>
+    <div class="square-ui nes-container with-title is-centered">
+      <p class="title">How do you feel after?</p>
+      <input id="reflection2Input" class="nes-input" type="text" placeholder="Type your feeling…" />
+      <div class="nav-buttons">
+        <button class="nes-btn is-error" onclick="goBack()">⬅ Back</button>
+        <button class="nes-btn is-success" onclick="finishFlow()">Next ➡</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MORNING COMPLETE SCREEN -->
+  <div class="screen" id="complete-screen">
+    <div class="square-ui nes-container with-title is-centered">
+      <p class="title">Morning Complete!</p>
+      <button class="nes-btn is-primary" onclick="nextStep()">Let’s Go</button>
+    </div>
+  </div>
+
+  <!-- Q3: PREP FOR FUTURE -->
+  <div class="screen" id="question3-screen">
+    <div class="video-wrapper">
+      <video id="question3-video" autoplay muted loop playsinline></video>
+    </div>
+    <div class="square-ui nes-container with-title is-centered">
+      <p class="title">Prep something for the future:</p>
+      <button class="nes-btn" onclick="selectPrepFuture('prep')">Meal</button>
+      <button class="nes-btn" onclick="selectPrepFuture('outfit')">Outfit</button>
+      <button class="nes-btn" onclick="selectPrepFuture('laundry')">Laundry</button>
+      <div class="nav-buttons">
+        <button class="nes-btn is-error" onclick="goBack()">⬅ Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTIVITY SCREEN (Q3) -->
+  <div class="screen" id="activity3-screen">
+    <div class="video-wrapper">
+      <video id="activity3-video" autoplay muted loop playsinline></video>
+    </div>
+    <div class="square-ui nes-container with-title is-centered">
+      <h2 id="activity3-title">Activity</h2>
+      <button class="nes-btn is-success" onclick="finishPrepFuture()">Finish Activity</button>
+    </div>
+  </div>
+
+  <!-- REFLECTION SCREEN (Q3) -->
+  <div class="screen" id="reflection3-screen">
+    <div class="video-wrapper">
+      <video id="reflection3-video" autoplay muted loop playsinline></video>
+    </div>
+    <div class="square-ui nes-container with-title is-centered">
+      <p class="title">How do you feel after?</p>
+      <input id="reflection3Input" class="nes-input" type="text" placeholder="Type your feeling..." />
+      <div class="nav-buttons">
+        <button class="nes-btn is-error" onclick="goBack()">⬅ Back</button>
+        <button class="nes-btn is-success" onclick="submitReflection3()">Next ➡</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q4: END-OF-DAY ENERGY -->
+  <div class="screen" id="question4-screen">
+    <div class="video-wrapper">
+      <video id="question4-video" autoplay muted loop playsinline></video>
+    </div>
+    <div class="square-ui nes-container with-title is-centered">
+      <p class="title">Use your energy before you relax:</p>
+      <button class="nes-btn" onclick="selectEnergyAct('bigtask')">Tackle a Big Task</button>
+      <button class="nes-btn" onclick="selectEnergyAct('plans')">Make Plans</button>
+      <button class="nes-btn" onclick="selectEnergyAct('hobby')">Do your Hobby</button>
+      <div class="nav-buttons">
+        <button class="nes-btn is-error" onclick="goBack()">⬅ Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTIVITY SCREEN (Q4) -->
+  <div class="screen" id="activity4-screen">
+    <div class="video-wrapper">
+      <video id="activity4-video" autoplay muted loop playsinline></video>
+    </div>
+    <div class="square-ui nes-container with-title is-centered">
+      <h2 id="activity4-title">Activity Done!</h2>
+      <button class="nes-btn is-success" onclick="finishEnergyAct()">Finish Activity</button>
+    </div>
+  </div>
+
+  <!-- REFLECTION SCREEN (Q4) -->
+  <div class="screen" id="reflection4-screen">
+    <div class="video-wrapper">
+      <video id="reflection4-video" autoplay muted loop playsinline></video>
+    </div>
+    <div class="square-ui nes-container with-title is-centered">
+      <p class="title">How do you feel after?</p>
+      <input id="reflection4Input" class="nes-input" type="text" placeholder="Type your feeling..." />
+      <div class="nav-buttons">
+        <button class="nes-btn is-error" onclick="goBack()">⬅ Back</button>
+        <button class="nes-btn is-success" onclick="finishMidday()">Finish ➡</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MIDDAY COMPLETE SCREEN -->
+  <div class="screen" id="midday-complete-screen">
+    <div class="square-ui nes-container with-title is-centered">
+      <p class="title">Midday Complete!</p>
+      <!-- Changed to nextStep() so it goes to Q5 -->
+      <button class="nes-btn is-primary" onclick="nextStep()">OK</button>
+    </div>
+  </div>
+
+  <!-- Q5: EVENING WIND-DOWN QUESTION -->
+  <div class="screen" id="question5-screen">
+    <div class="square-ui nes-container with-title is-centered">
+      <p class="title">What helps you relax before bed?</p>
+      <button class="nes-btn" onclick="selectRelaxation('Bath')">Taking a bath</button>
+      <button class="nes-btn" onclick="selectRelaxation('Movie')">Watching a movie</button>
+      <button class="nes-btn" onclick="selectRelaxation('Company')">Being with others</button>
+      <div class="nav-buttons">
+        <button class="nes-btn is-error" onclick="goBack()">⬅ Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTIVITY SCREEN (Q5) -->
+  <div class="screen" id="activity5-screen">
++   <div class="video-wrapper">
++     <video id="activity5-video" autoplay muted loop playsinline></video>
++   </div>
+    <div class="square-ui nes-container with-title is-centered">
+      <h2 id="activity5-title">Activity</h2>
+      <button class="nes-btn is-success" onclick="finishRelaxation()">Finish Activity</button>
+    </div>
+  </div>
+
+  <!-- REFLECTION SCREEN (Q5) -->
+<div class="screen" id="reflection5-screen">
+  <div class="video-wrapper">
+    <video id="reflection5-video" autoplay muted loop playsinline></video>
+  </div>
+  <div class="square-ui nes-container with-title is-centered">
+    <p class="title">How do you feel after?</p>
+    <input id="reflection5Input" class="nes-input" type="text" placeholder="Type your feeling…" />
+    <div class="nav-buttons">
+      <button class="nes-btn is-error" onclick="goBack()">⬅ Back</button>
+      <button class="nes-btn is-success" onclick="submitReflection5()">Next ➡</button>
+    </div>
+  </div>
+</div>
+  
+  <!-- DAY COMPLETE SCREEN -->
+  <div class="screen" id="day-complete-screen">
+    <div class="square-ui nes-container with-title is-centered">
+      <p class="title">Day Complete!</p>
+      <button class="nes-btn is-primary" onclick="nextStep()">View Today’s Recap</button>
+    </div>
+  </div>
+
+  <!-- RECAP SCREEN -->
+  <div class="screen" id="recap-screen">
+    <div class="square-ui nes-container with-title is-centered">
+      <p class="title">Your Days Recap</p>
+      <div id="recap-content" style="text-align:left; font-size:.8rem; color:#333; background:#e3c7a0; padding:1rem; border-radius:8px;">
+        <!-- recap details injected by JS -->
+      </div>
+      <button class="nes-btn is-primary" onclick="alert('Thanks for using Day Companion!')">Finish</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

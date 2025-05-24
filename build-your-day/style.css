@@ -1,4 +1,199 @@
-.screen { display: none; }
-.screen.active { display: block; }
-.hidden { display: none; }
+body {
+    font-family: 'Press Start 2P', cursive;
+    background-color: black;
+    color: white;
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #site-header {
+    text-align: center;
+    margin-top: 1rem;
+    color: #ccc;
+    z-index: 2;
+  }
+  
+  .screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* 1:1 square video wrapper */
+  .video-wrapper {
+    position: absolute;
+    width: 100vmin;
+    height: 100vmin;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    z-index: 0;
+  }
+  
+  .video-wrapper video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  
+  /* Base square UI */
+  .square-ui {
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    background: #e3c7a0;
+    border: 4px solid #333;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  
+  /* Compact durations & nav */
+  .duration {
+    font-size: 0.6rem;
+    color: #444;
+  }
+  
+  .nav-buttons {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  /* ---- ACTIVITY SCREEN OVERRIDE ---- */
+  /* Use a semi-transparent rounded box with dark text */
+  .activity-ui {
+    background: rgba(255,255,255,0.85) !important;
+    border-radius: 12px !important;
+    border: none !important;
+    color: #333 !important;
+    width: 300px;
+    height: auto;
+    padding: 1.5rem;
+  }
+  
+  /* Darken title & timer */
+  .activity-ui .title,
+  .activity-ui h2,
+  .activity-ui p {
+    color: #333 !important;
+  }
+  
+  /* Compact the layout inside activity */
+  .activity-ui h2 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .activity-ui p {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
 
+  /* ======================================================
+   Override for only the Activity Screen container
+   ====================================================== */
+#activity-screen .square-ui {
+    /* translucent white box */
+    background: rgba(255, 255, 255, 0.85) !important;
+    /* remove the dark border */
+    border: none !important;
+    /* rounded corners */
+    border-radius: 12px !important;
+    /* ensure it’s sized to its content */
+    width: auto !important;
+    height: auto !important;
+    padding: 1.5rem !important;
+  }
+  
+  /* darken the text inside it */
+  #activity-screen .square-ui .title,
+  #activity-screen .square-ui h2,
+  #activity-screen .square-ui p {
+    color: #333 !important;
+  }
+  
+  /* make the button text visible too */
+  #activity-screen .square-ui .nes-btn {
+    color: #333 !important;
+  }
+  
+  /* optionally tighten spacing inside activity */
+  #activity-screen .square-ui {
+    gap: 0.75rem;
+  }
+
+  /* ======================================================
+   Darken text inside all square-ui panels
+   ====================================================== */
+.square-ui .title,
+.screen .square-ui p,
+.screen .square-ui span,
+.screen .square-ui input,
+.screen .square-ui label {
+  color: #333 !important;
+}
+
+/* If you have any NES button text that sits on light bg, ensure contrast */
+.square-ui .nes-btn {
+  color: #333 !important;
+}
+
+
+.screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  /* Reflection & Next Question don’t need a video background */
+  #reflection-screen .square-ui,
+  #next-question-screen .square-ui {
+    width: 300px;
+    height: auto;
+    padding: 1.5rem;
+  }
+
+
+  /* Apply Q1 activity style to all activity screens */
+#activity-screen .square-ui,
+#activity2-screen .square-ui,
+#activity3-screen .square-ui,
+#activity4-screen .square-ui,
+#activity5-screen .square-ui {
+  background: rgba(255,255,255,0.85) !important;
+  border-radius: 12px !important;
+  border: none !important;
+  color: #333 !important;
+}
+
+#activity-screen .square-ui h2,
+#activity-screen .square-ui p,
+#activity2-screen .square-ui .title,
+#activity2-screen .square-ui input,
+#activity3-screen .square-ui h2,
+#activity4-screen .square-ui h2,
+#activity5-screen .square-ui h2 {
+  color: #333 !important;
+}
