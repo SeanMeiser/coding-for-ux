@@ -117,7 +117,7 @@ body {
     border: none !important;
     /* rounded corners */
     border-radius: 12px !important;
-    /* ensure it’s sized to its content */
+    /* ensure it's sized to its content */
     width: auto !important;
     height: auto !important;
     padding: 1.5rem !important;
@@ -167,7 +167,7 @@ body {
   }
   
   
-  /* Reflection & Next Question don’t need a video background */
+  /* Reflection & Next Question don't need a video background */
   #reflection-screen .square-ui,
   #next-question-screen .square-ui {
     width: 300px;
@@ -196,4 +196,10 @@ body {
 #activity4-screen .square-ui h2,
 #activity5-screen .square-ui h2 {
   color: #333 !important;
+}
+
+/* Custom primary button style */
+.nes-btn.is-primary {
+  background-color: #1F9CED !important; /* A nice blue color */
+  color: white !important;
 }
