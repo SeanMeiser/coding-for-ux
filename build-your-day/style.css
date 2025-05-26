@@ -201,5 +201,5 @@ body {
 /* Custom primary button style */
 .nes-btn.is-primary {
   background-color: #1F9CED !important; /* A nice blue color */
-  color: white !important;
+  color: black !important;
 }
