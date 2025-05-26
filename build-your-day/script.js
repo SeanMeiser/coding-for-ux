@@ -25,6 +25,12 @@ let currentStep = 0;
 let timerInterval;
 const answers = {};
 
+// - This defines all the screens (in order). 
+// - currentStep tracks which screen is currently active.
+// - answers stores all user choices and reflections.
+// - timerInterval is used to run and clear countdown timers.
+// --------------------------------------------------------------------------------------
+
 // Show only the given screen
 function showStep(i) {
   currentStep = i;
@@ -34,10 +40,16 @@ function showStep(i) {
   loadVideo && loadVideo(i);
 }
 
+// - This hides all screens and only shows the one with the matching index.
+// - If there’s a video associated with the screen, it loads it.
+// --------------------------------------------------------------------------------------
+
 function nextStep()    { showStep(Math.min(currentStep + 1, steps.length - 1)); }
 function goBack()      { showStep(Math.max(currentStep - 1, 0)); }
 function skipStep()    { nextStep(); }
 
+// - These functions move forward, backward, or skip to the next screen.
+// --------------------------------------------------------------------------------------
 
 // Q1 handlers
 function selectActivity(name, minutes) {
@@ -52,6 +64,10 @@ function startActivity(name, minutes) {
   v.src = `videos/${name.toLowerCase()}.mp4`;
   v.load();
 }
+
+// - When a movement activity is selected, it’s stored and used to update the activity screen and load the correct video.
+// --------------------------------------------------------------------------------------
+
 function startTimer(sec) {
   const d = document.getElementById("timer-display");
   clearInterval(timerInterval);
@@ -61,8 +77,16 @@ function startTimer(sec) {
     if (sec-- <= 0) clearInterval(timerInterval);
   }, 1000);
 }
+
+// - This starts a live countdown timer that updates every second.
+// --------------------------------------------------------------------------------------
+
+
 function finishActivity() { clearInterval(timerInterval); nextStep(); }
 function submitReflection() { answers.reflection1 = document.getElementById("reflectionInput").value; nextStep(); }
+
+// - Ends the activity and moves on to the reflection screen.
+// --------------------------------------------------------------------------------------
 
 // Q2 handlers
 function selectMindActivity(type) {
@@ -191,6 +215,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+// - Maps each screen to the matching <video> element and background file.
+// - For Q5, it dynamically loads based on answers.relaxation.
+// --------------------------------------------------------------------------------------
+
 // recap helper
 function showRecap() {
   const c = document.getElementById("recap-content");
@@ -208,6 +236,9 @@ function showRecap() {
   ].map(line => `<p>${line}</p>`).join('');
 }
 
+// - This builds the final summary screen using everything stored in answers.
+// --------------------------------------------------------------------------------------
+
 // initialize and hook into recap display
 document.addEventListener("DOMContentLoaded", () => {
   showStep(0);
@@ -219,3 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 });
+
+// - On startup, shows the first screen.
+// - Hooks into nextStep() so that if you land on the recap screen, it automatically calls showRecap().
+// --------------------------------------------------------------------------------------
