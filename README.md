@@ -19,7 +19,6 @@ To run this project locally:
 
 git clone https://github.com/your-username/build-your-day.git
 
-
 	2.	Navigate to the project folder.
 	3.	Open index.html in your preferred web browser.
 
@@ -31,18 +30,14 @@ This project is a work in progress and will continue to evolve as part of an ong
 
 ⸻
 
-## Folder Structure (Optional)
+## Folder Structure
 
-If your project has multiple files, you might consider adding:
-
-/assets
-  /images
-  /videos
-/css
-  style.css
-/js
-  script.js
+/build-your-day
+	/videos
+		All Videos
 index.html
+style.css
+script.js
 README.md
 
 ⸻
