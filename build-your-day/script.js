@@ -73,8 +73,8 @@ function startTimer(sec) {
   clearInterval(timerInterval);
   timerInterval = setInterval(() => {
     const m = Math.floor(sec / 60), s = sec % 60;
-    d.textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
-    if (sec-- <= 0) clearInterval(timerInterval);
+    d.textContent = `${m}:${s < 10 ? '0' : ''}${s}`; // formats MM:SS
+    if (sec-- <= 0) clearInterval(timerInterval);  // Stops when hit 0
   }, 1000);
 }
 
